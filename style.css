@@ -22,19 +22,6 @@ hr {
   color: #ddd;
 }
 
-/* alignment classes for image figures - namely github logo*/
-.center {
-  text-align: center;
-}
-
-.right {
-  text-align: right;
-}
-
-figure {
-	float: right;
-}
-
 /* code */
 pre {
   border: 1px solid #ddd;
