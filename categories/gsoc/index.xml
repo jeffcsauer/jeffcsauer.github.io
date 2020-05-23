@@ -6,10 +6,19 @@
     <description>Recent content in GSOC on A minimal Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/gsoc/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>First GSOC blog post!</title>
+      <link>/post/2020/05/22/first-gsoc-blog-post/</link>
+      <pubDate>Fri, 22 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/05/22/first-gsoc-blog-post/</guid>
+      <description>Welcome to my first GSOC blog post! Google Summer of Code (GSOC) 2020 has been going for a couple weeks now and I thought it would be fun to share what progress has been made so far. If you&amp;rsquo;re just joining now you should know that the first month or so is the &amp;lsquo;Community Bonding Period&amp;rsquo;. During this time the student developers get to know their community, establish expectations, and set recurring check-in meetings.</description>
+    </item>
     
     <item>
       <title>PhD Year 1 Semester 2 Recap and Summer Plans</title>
