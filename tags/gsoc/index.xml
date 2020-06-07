@@ -6,10 +6,20 @@
     <description>Recent content in GSOC on A minimal Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/gsoc/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GSOC Blog #2 - Progress and Revisions</title>
+      <link>/post/2020/06/07/gsoc-blog-2-coding-progress-revisions-and-more/</link>
+      <pubDate>Sun, 07 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/06/07/gsoc-blog-2-coding-progress-revisions-and-more/</guid>
+      <description>Coding, Progress, Revisions, and More It has been a few weeks since the last GSoC post (5/22/2020). A lot has happened in the United States during this time, and more is sure to come. In the following post I will share my progress on the project and reflect on the challenges faced so far.
+More community bonding The plan of hosting calls on Friday has continued without a hitch. On 5/29 we held a PySAL GSoC-wide call to ask general questions that might pertain to all of the projects.</description>
+    </item>
     
     <item>
       <title>First GSOC blog post!</title>
