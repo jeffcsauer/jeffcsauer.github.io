@@ -6,10 +6,20 @@
     <description>Recent content in Posts on A minimal Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GSOC Blog #3 - Working losh() function!</title>
+      <link>/post/2020/06/15/gsoc-blog-3-working-losh-function-and-on-to-local-join-counts/</link>
+      <pubDate>Mon, 15 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/06/15/gsoc-blog-3-working-losh-function-and-on-to-local-join-counts/</guid>
+      <description>Introduction Slightly shorter blog post this week! More substantial update last week available here. En route to North Carolina to help settle a relative&amp;rsquo;s house. Listening to the audiobook of How To Be An Antiracist by Ibram X. Kendi during the drive.
+ESDA call Had a ESDA-specific call with Serge this week on 6/12. We discussed how to fine-tune the LOSH function, which is now mostly operational. The function currently offers chi-square inference (demostration of code available here).</description>
+    </item>
     
     <item>
       <title>GSOC Blog #2 - Progress and Revisions</title>
