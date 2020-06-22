@@ -6,10 +6,21 @@
     <description>Recent content in Home on A minimal Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GSOC Blog #4 - losh() improvements and local join count inference</title>
+      <link>/post/2020/06/22/gsoc-blog-4-losh-improvements-and-local-join-count-inference/</link>
+      <pubDate>Mon, 22 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/06/22/gsoc-blog-4-losh-improvements-and-local-join-count-inference/</guid>
+      <description>Introduction This has been quite an interesting week in GSoC. I&amp;rsquo;ve made several improvements to the losh() function and have (fingers-crossed) figured out inference for the local join counts! Details below.
+losh() improvements As mentioned on the previous blog post, Levi had raised several issues-as-feedback on my GSOC20202 workbook repository. These included:
+ Using warnings rather than print statements Simplifying the $VarH_i$ calculation Switching to sparse weights to calculate row sums Breaking notebooks into .</description>
+    </item>
     
     <item>
       <title>GSOC Blog #3 - Working losh() function!</title>
