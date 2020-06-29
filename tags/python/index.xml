@@ -6,10 +6,20 @@
     <description>Recent content in python on A minimal Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GSOC Blog #5: The final week of Phase 1!</title>
+      <link>/post/2020/06/29/gsoc-blog-5-the-final-week-of-phase-1/</link>
+      <pubDate>Mon, 29 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/06/29/gsoc-blog-5-the-final-week-of-phase-1/</guid>
+      <description>Introduction We are rapidly heading towards the final week for the first phase of GSoC 2020! What a wild ride it has been - I can&amp;rsquo;t believe it&amp;rsquo;s only been around a month and a half! Brief blog post this week as there is lots to do.
+Phase 1 Progress Recap I&amp;rsquo;ve produced solid draft of all of the functions original identified in the proposal, with inference working for nearly all of them.</description>
+    </item>
     
     <item>
       <title>GSOC Blog #4 - losh() improvements and local join count inference</title>
