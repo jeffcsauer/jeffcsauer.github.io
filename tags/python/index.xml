@@ -6,10 +6,19 @@
     <description>Recent content in python on A minimal Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GSOC Blog #6: A few good updates</title>
+      <link>/post/2020/07/03/gsoc-blog-6-a-few-good-updates/</link>
+      <pubDate>Fri, 03 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/07/03/gsoc-blog-6-a-few-good-updates/</guid>
+      <description>Introduction What a whirlwind of a day to wrap up the week! This was a challenging week for GSoC. As I shared last week, I was feeling a bit down as I had encountered my first major hurdle in the project. This hurdle - inference for Case 1 of Bivariate Local Join Counts - was something that took my about a week of tinkering, reflecting, and trial-and-error to resolve. After an inspiring PySAL developer call I decided to spend the afternoon working on it and a solution finally emerged!</description>
+    </item>
     
     <item>
       <title>GSOC Blog #5: The final week of Phase 1!</title>
