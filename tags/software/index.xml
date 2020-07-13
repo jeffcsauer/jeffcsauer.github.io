@@ -6,10 +6,20 @@
     <description>Recent content in software on A minimal Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Jul 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/software/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GSOC Blog #7: Midsummer updates</title>
+      <link>/post/2020/07/12/gsoc-blog-7-midsummer-updates/</link>
+      <pubDate>Sun, 12 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/07/12/gsoc-blog-7-midsummer-updates/</guid>
+      <description>Introduction The midpoint of summer is approaching. This coming week will mark a midway point in GSoC2020. As I move away from the hurdle of the last couple of weeks I am setting into a pace of fine-tuning the functions and creating robust notebooks to demonstrate their functionality. While bugs are nuanced errors are sure to arise, I am feeling good about the latter 2/3 of GSoC2020.
+Strategy: demonstration notebooks I am working on two &amp;lsquo;final&amp;rsquo; demonstration notebooks that showcase the LOSH and LJC functions.</description>
+    </item>
     
     <item>
       <title>GSOC Blog #6: A few good updates</title>
