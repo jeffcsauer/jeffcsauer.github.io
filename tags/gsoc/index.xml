@@ -6,10 +6,19 @@
     <description>Recent content in GSOC on A minimal Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Jul 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/gsoc/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GSOC Blog #8: a PR requestion for functions and docs</title>
+      <link>/post/2020/07/21/gsoc-blog-8-a-pr-requestion-for-functions-and-docs/</link>
+      <pubDate>Tue, 21 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/07/21/gsoc-blog-8-a-pr-requestion-for-functions-and-docs/</guid>
+      <description>Introduction Two weeks are left in the Phase II of GSOC! It is a bit amazing - and terrifying - when one thinks of how fast this summer passed. I am incredibly grateful for the opportunity provided by GSOC and I hope to continue the summer productivity into the Fall semester. But before then, there remains plenty to do in GSOC! This blog post will act as a primary recap for what has happened over the course of Phase II.</description>
+    </item>
     
     <item>
       <title>GSOC Blog #7: Midsummer updates</title>
