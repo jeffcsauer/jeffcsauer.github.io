@@ -6,10 +6,20 @@
     <description>Recent content in Posts on A minimal Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Jul 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GSOC Blog #9: What To Expect In The Final Phase of GSOC!</title>
+      <link>/post/2020/07/26/gsoc-blog-9-what-to-expect-in-the-final-phase-of-gsoc/</link>
+      <pubDate>Sun, 26 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/07/26/gsoc-blog-9-what-to-expect-in-the-final-phase-of-gsoc/</guid>
+      <description>GSOC Updates As Phase II comes to an end, I am happy to state that significant progress has been made on the original details of the GSOC ESDA Enhancements project. All proposed estimators have been implemented with docstrings, doctests, and stylized using the PEP8 style guide. A PR is open documenting these proposed contributions. A GSOC call on 7/24 outlined several additional tasks to keep the contribution momentum going:
+  Updating LOSH inference to new the __crand() engine</description>
+    </item>
     
     <item>
       <title>GSOC Blog #8: a PR request for functions and docs</title>
