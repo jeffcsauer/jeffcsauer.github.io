@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>GSOC on A minimal Hugo website</title>
@@ -6,10 +6,19 @@
     <description>Recent content in GSOC on A minimal Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 09 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/gsoc/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GSOC Blog #10: Progress on Local Geary</title>
+      <link>/post/2020/08/09/gsoc-blog-10-progress-on-local-geary/</link>
+      <pubDate>Sun, 09 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/08/09/gsoc-blog-10-progress-on-local-geary/</guid>
+      <description>A few brief life updates In a moment typically reserved for &amp;lsquo;As seen on TV ads&amp;hellip;&amp;rsquo;, I knocked over an entire glass of water onto my laptop a few days ago. While the laptop sports one of the new Ryzen 7 8-thread CPUs, the technology remains quite sensitive to water. A nearly-full 8 ounce glass of water came tumbling down on the keyboard. Like most times of brief crisis, I was stunned at what was happening before me.</description>
+    </item>
     
     <item>
       <title>GSOC Blog #9: What To Expect In The Final Phase of GSOC!</title>
@@ -17,8 +26,7 @@
       <pubDate>Sun, 26 Jul 2020 00:00:00 +0000</pubDate>
       
       <guid>/post/2020/07/26/gsoc-blog-9-what-to-expect-in-the-final-phase-of-gsoc/</guid>
-      <description>GSOC Updates As Phase II comes to an end, I am happy to state that significant progress has been made on the original details of the GSOC ESDA Enhancements project. All proposed estimators have been implemented with docstrings, doctests, and stylized using the PEP8 style guide. A PR is open documenting these proposed contributions. A GSOC call on 7/24 outlined several additional tasks to keep the contribution momentum going:
-  Updating LOSH inference to new the __crand() engine</description>
+      <description>GSOC Updates As Phase II comes to an end, I am happy to state that significant progress has been made on the original details of the GSOC ESDA Enhancements project. All proposed estimators have been implemented with docstrings, doctests, and stylized using the PEP8 style guide. A PR is open documenting these proposed contributions. A GSOC call on 7&amp;frasl;24 outlined several additional tasks to keep the contribution momentum going:</description>
     </item>
     
     <item>
@@ -36,7 +44,7 @@
       <pubDate>Sun, 12 Jul 2020 00:00:00 +0000</pubDate>
       
       <guid>/post/2020/07/12/gsoc-blog-7-midsummer-updates/</guid>
-      <description>Introduction The midpoint of summer is approaching. This coming week will mark a midway point in GSoC2020. As I move away from the hurdle of the last couple of weeks I am setting into a pace of fine-tuning the functions and creating robust notebooks to demonstrate their functionality. While bugs are nuanced errors are sure to arise, I am feeling good about the latter 2/3 of GSoC2020.
+      <description>Introduction The midpoint of summer is approaching. This coming week will mark a midway point in GSoC2020. As I move away from the hurdle of the last couple of weeks I am setting into a pace of fine-tuning the functions and creating robust notebooks to demonstrate their functionality. While bugs are nuanced errors are sure to arise, I am feeling good about the latter 2&amp;frasl;3 of GSoC2020.
 Strategy: demonstration notebooks I am working on two &amp;lsquo;final&amp;rsquo; demonstration notebooks that showcase the LOSH and LJC functions.</description>
     </item>
     
@@ -77,7 +85,7 @@ losh() improvements As mentioned on the previous blog post, Levi had raised seve
       
       <guid>/post/2020/06/15/gsoc-blog-3-working-losh-function-and-on-to-local-join-counts/</guid>
       <description>Introduction Slightly shorter blog post this week! More substantial update last week available here. En route to North Carolina to help settle a relative&amp;rsquo;s house. Listening to the audiobook of How To Be An Antiracist by Ibram X. Kendi during the drive.
-ESDA call Had a ESDA-specific call with Serge this week on 6/12. We discussed how to fine-tune the LOSH function, which is now mostly operational. The function currently offers chi-square inference (demostration of code available here).</description>
+ESDA call Had a ESDA-specific call with Serge this week on 6&amp;frasl;12. We discussed how to fine-tune the LOSH function, which is now mostly operational. The function currently offers chi-square inference (demostration of code available here).</description>
     </item>
     
     <item>
@@ -87,7 +95,7 @@ ESDA call Had a ESDA-specific call with Serge this week on 6/12. We discussed ho
       
       <guid>/post/2020/06/07/gsoc-blog-2-coding-progress-revisions-and-more/</guid>
       <description>Coding, Progress, Revisions, and More It has been a few weeks since the last GSoC post (5/22/2020). A lot has happened in the United States during this time, and more is sure to come. In the following post I will share my progress on the project and reflect on the challenges faced so far.
-More community bonding The plan of hosting calls on Friday has continued without a hitch. On 5/29 we held a PySAL GSoC-wide call to ask general questions that might pertain to all of the projects.</description>
+More community bonding The plan of hosting calls on Friday has continued without a hitch. On 5&amp;frasl;29 we held a PySAL GSoC-wide call to ask general questions that might pertain to all of the projects.</description>
     </item>
     
     <item>

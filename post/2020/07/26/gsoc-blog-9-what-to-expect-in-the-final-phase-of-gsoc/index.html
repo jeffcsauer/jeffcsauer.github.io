@@ -36,27 +36,32 @@
 
 
 <main>
+
+
 <h1 id="gsoc-updates">GSOC Updates</h1>
-<p>As Phase II comes to an end, I am happy to state that significant progress has been made on the original details of the GSOC ESDA Enhancements project. All proposed estimators have been implemented with docstrings, doctests, and stylized using the PEP8 style guide. A PR is open documenting these <a href="https://github.com/pysal/esda/pull/139">proposed contributions</a>. A GSOC call on 7/24 outlined several additional tasks to keep the contribution momentum going:</p>
+
+<p>As Phase II comes to an end, I am happy to state that significant progress has been made on the original details of the GSOC ESDA Enhancements project. All proposed estimators have been implemented with docstrings, doctests, and stylized using the PEP8 style guide. A PR is open documenting these <a href="https://github.com/pysal/esda/pull/139">proposed contributions</a>. A GSOC call on <sup>7</sup>&frasl;<sub>24</sub> outlined several additional tasks to keep the contribution momentum going:</p>
+
 <ul>
-<li>
-<p>Updating LOSH inference to new the <code>__crand()</code> engine</p>
+<li><p>Updating LOSH inference to new the <code>__crand()</code> engine</p>
+
 <ul>
-<li>The existing <code>losh()</code> estimator can (and maybe should!) be migrated to the new <code>__crand()</code> engine.</li>
-</ul>
-</li>
-<li>
-<p>Draft univariate and multivariate local Geary estimator</p>
+<li>The existing <code>losh()</code> estimator can (and maybe should!) be migrated to the new <code>__crand()</code> engine.<br /></li>
+</ul></li>
+
+<li><p>Draft univariate and multivariate local Geary estimator</p>
+
 <ul>
-<li>An additional exploratory spatial statistic of interest is the Local Geary estimator, originally outlined in <a href="https://www.google.com/search?client=firefox-b-1-d&amp;q=anselin+1995">Anselin 1995</a>.</li>
+<li>An additional exploratory spatial statistic of interest is the Local Geary estimator, originally outlined in <a href="https://www.google.com/search?client=firefox-b-1-d&amp;q=anselin+1995">Anselin 1995</a>.<br /></li>
+</ul></li>
+
+<li><p>Experiment with the LOSH statistic as it relates to <a href="https://link.springer.com/article/10.1007/s11749-018-0599-x">Bivand and Wong&rsquo;s 2018 paper</a>.</p></li>
 </ul>
-</li>
-<li>
-<p>Experiment with the LOSH statistic as it relates to <a href="https://link.springer.com/article/10.1007/s11749-018-0599-x">Bivand and Wong&rsquo;s 2018 paper</a>.</p>
-</li>
-</ul>
+
 <h1 id="strategy">Strategy</h1>
+
 <p>I have begun implementing the local Geary statistics <a href="https://github.com/jeffcsauer/GSOC2020/blob/master/review/Local_Geary_Workbook.ipynb">here</a>. The local Geary values are matching the output from GeoDa, but there are a few additional steps that are still necessary. First and foremost is inference via conditional randomization. Second is the partitioning of the local Geary values and inference into cluster groups.</p>
+
 <p>After basic inference is up and running for the local Geary estimators I will likely switch to updating the new <code>__crand()</code> engine. Once this is working I will experiment with the statistic on some of the claims raised in Bivand and Wong 2018. Plenty to do in the next eight weeks or so!s</p>
 
 </main>
@@ -66,10 +71,9 @@
 <script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 <script async src="//yihui.name/js/center-img.js"></script>
-
   
   <hr/>
-  © <a href="https://geog.umd.edu/gradprofile/sauer/jeffery-%28jeff%29">Jeff C. Sauer</a> 2017 &ndash; 2020 | <a href="https://github.com/jeffcsauer">Github</a> | <a href="https://twitter.com/jcsauer_geo">Twitter</a>
+  &copy; <a href="https://geog.umd.edu/gradprofile/sauer/jeffery-%28jeff%29">Jeff C. Sauer</a> 2017 &ndash; 2020 | <a href="https://github.com/jeffcsauer">Github</a> | <a href="https://twitter.com/jcsauer_geo">Twitter</a>
   
   </footer>
   </body>

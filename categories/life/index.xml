@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Life on A minimal Hugo website</title>
@@ -6,10 +6,19 @@
     <description>Recent content in Life on A minimal Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 09 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/life/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GSOC Blog #10: Progress on Local Geary</title>
+      <link>/post/2020/08/09/gsoc-blog-10-progress-on-local-geary/</link>
+      <pubDate>Sun, 09 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/08/09/gsoc-blog-10-progress-on-local-geary/</guid>
+      <description>A few brief life updates In a moment typically reserved for &amp;lsquo;As seen on TV ads&amp;hellip;&amp;rsquo;, I knocked over an entire glass of water onto my laptop a few days ago. While the laptop sports one of the new Ryzen 7 8-thread CPUs, the technology remains quite sensitive to water. A nearly-full 8 ounce glass of water came tumbling down on the keyboard. Like most times of brief crisis, I was stunned at what was happening before me.</description>
+    </item>
     
     <item>
       <title>PhD Year 1 Semester 2 Recap and Summer Plans</title>
