@@ -6,10 +6,20 @@
     <description>Recent content in Life on A minimal Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 09 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 24 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/life/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GSOC Blog #11: A conclusion to GSOC!</title>
+      <link>/post/2020/08/24/gsoc-blog-11-a-conclusion-to-gsoc/</link>
+      <pubDate>Mon, 24 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/08/24/gsoc-blog-11-a-conclusion-to-gsoc/</guid>
+      <description>A conclusion to Google Summer of Code 2020 A huge thank you to to @sjsrey, @ljwolf, @darribas, @slumnitz, @TaylorOshan, and the larger PySAL group for acting as mentors throughout the summer and welcoming me to the PySAL community. This was a wonderful exercise in developing open-source software and I would highly recommend future students consider contributing to PySAL!
+After a summer condensed into ten blog posts we arrive at the finale - one final blog post to mark the end of the program.</description>
+    </item>
     
     <item>
       <title>GSOC Blog #10: Progress on Local Geary</title>
