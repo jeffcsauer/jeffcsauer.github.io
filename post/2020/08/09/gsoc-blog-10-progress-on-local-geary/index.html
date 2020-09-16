@@ -36,61 +36,34 @@
 
 
 <main>
-
-
 <h1 id="a-few-brief-life-updates">A few brief life updates</h1>
-
 <p>In a moment typically reserved for &lsquo;As seen on TV ads&hellip;&rsquo;, I knocked over an entire glass of water onto my <a href="https://www.newegg.com/icicle-silver-asus-zenbook-um433da-nh74-mainstream/p/N82E16834235285?Item=N82E16834235285">laptop</a> a few days ago. While the laptop sports one of the new Ryzen 7 8-thread CPUs, the technology remains quite sensitive to water. A nearly-full 8 ounce glass of water came tumbling down on the keyboard. Like most times of brief crisis, I was stunned at what was happening before me. Although I tried to resuscitate the laptop with rice, vigorous shaking, and some prayers, it eventually went black after about an hour or so. Unbeknownst to me ASUS has a limited warranty, free replacement program for accidental damage. The process will take about two months, but I can&rsquo;t complain as I caused the flood! Luckily, all of my work files are in cloud storage so I can continue on my desktop. The laptop was the primary vehicle for nearly all of the code completed during GSOC 2020, so it feels a bit strange heading into the final leg of the race without your normal shoes.</p>
-
 <p>On a separate note, I recently received an email about upcoming talks at the Open Geospatial Consortium (OGC). The upcoming health-related GIS talks are on the intersection of ethics and GIS, hosted by Ajay K. Gupta and Dr. Ram Peruvemba (Health Solutions Research, Inc.), as well as Ed Parsons (Google). These topics are of immense interest to me and I hope to integrate them into my future work. Preview of the talks by Gupta and Peruvemba <a href="https://portal.ogc.org/files/?artifact_id=94352">here</a>, and Parsons <a href="https://www.edparsons.com/2020/06/the-ethics-of-geospatial-the-four-es/">here</a>.</p>
-
 <h1 id="gsoc-updates">GSOC updates</h1>
-
 <p>As stated on a previous blog post, the majority of the GSOC work is complete and the following objectives are additional tasks I hope to contribute to PySAL.</p>
-
-<h2 id="updating-losh-inference-to-new-the-crand-engine">Updating LOSH inference to new the <code>__crand()</code> engine</h2>
-
+<h2 id="updating-losh-inference-to-new-the-__crand-engine">Updating LOSH inference to new the <code>__crand()</code> engine</h2>
 <p>This task has proven a bit tricky. On a GSOC ESDA call with Levi and Serge, they highlighted how the actual known behavior of conditional randomization as it relates to the LOSH equation is still unknown. So we are in a bit of uncharted territory. We have decided to try and implement the conditional randomization in pure python before attempting to migrate it to <code>numba</code>.</p>
-
 <p>The key part of the LOSH equation is getting the sum of the lagged neighbors. We are hoping that the following snippet is an effective way to do so:</p>
-
 <pre><code>(zrand - (zrand @ weights_i)) @ weights_i)
-</code></pre>
-
-<p>where <code>zrand</code> is a subset of observations around an area <code>i</code>, and <code>zi</code> is the held-out <code>i</code> value.</p>
-
+</code></pre><p>where <code>zrand</code> is a subset of observations around an area <code>i</code>, and <code>zi</code> is the held-out <code>i</code> value.</p>
 <p>While I am still working on this, it has been interesting to compare to the conditional randomization procedure available in the R <code>spdep</code> package. Specifically, the authors use the bootstrap procedure proposed by <a href="https://link.springer.com/article/10.1007%2Fs00168-014-0605-5">Xu et al (2014)</a>, or a slightly modified version of it. I wonder if they already tried to do a conditional randomization procedure as we are doing and determined it to be unsuitable? Only time will tell!</p>
-
 <h2 id="draft-univariate-and-multivariate-local-geary-estimator">Draft univariate and multivariate local Geary estimator</h2>
-
 <p>Another set of estimators that were identified as relevant to PySAL are the univariate and multivariate local Geary estimator. These are incredibly interesting statistics that I largely misunderstood on my first read. There is a subtle &lsquo;switch&rsquo; (to avoid using the word transformation) that happens between the univariate and multivariate version of the statistic.</p>
-
 <p>In the univariate case, we are interested in:</p>
-
-<p>$$c_i = \sum<em>j w</em>{ij} (x_i - x_j)^2$$</p>
-
+<p>$$c_i = \sum_j w_{ij} (x_i - x_j)^2$$</p>
 <p>However, when we extend the equation to the multivariate case,</p>
-
-<p>$$c<em>{k,i} = \sum</em>{v=1}^k c_{v,i}$$</p>
-
+<p>$$c_{k,i} = \sum_{v=1}^k c_{v,i}$$</p>
 <p>and Anselin notes that</p>
-
 <blockquote>
 <p>The expression in equation (10) [or the $c_{k,i}$ statistic above] can be generalized in a number of ways. As mentioned, other distance measures can be applied, such as a Manhattan distance (absolute differences), or, in general, any Minkowski distance metric. <a href="https://geodacenter.github.io/docs/LA_multivariateGeary1.pdf"><em>Anselin page 9, 2017</em></a></p>
 </blockquote>
-
 <p>Whereas the univariate implementation can, more or less, but fixed in a single form, the multivariate implementation must be implemented in such a way that is flexible to different types of distance metrics. My current implementation of the multivariate local Geary can correctly local Geary values based on a squared differences, although I have not yet figured out inference.</p>
-
 <p>The inference for the multivariate local Geary statistic is challenging for a few reasons. Most of the templates for conditional randomization in PySAL are univariate or bivariate at most. Indeed, the new <code>_crand()</code> engine currently <em>blocks</em> multivariate inputs. The multivariate local join counts estimator was successful because I could simplify the inputs into a single vector (due to the nature of the statistic), and then pass it through existing conditional randomization engines. However, the multivariate local Geary requires that</p>
-
 <blockquote>
 <p>A conditional permutation approach consists of holding the <em>tuple</em> of values observed at <em>i</em> fixed, and computing the statistic for <em>m</em> permutations of the remaining tuples over the other locations. <a href="https://geodacenter.github.io/docs/LA_multivariateGeary1.pdf"><em>Anselin page 10, 2017</em></a></p>
 </blockquote>
-
 <p>I&rsquo;m currently experimenting with randomization of zipped lists, although I&rsquo;m not actually sure this will work! I hope to have some answers by the end of August. On a more positive note, the univariate local Geary is <a href="https://github.com/jeffcsauer/GSOC2020/blob/master/functions/local_geary.py">fully operational with inference</a>, and I am in the process of writing up a doc for the estimator.</p>
-
-<h2 id="experiment-with-the-losh-statistic-as-it-relates-to-bivand-and-wong-s-2018-paper-https-link-springer-com-article-10-1007-s11749-018-0599-x">Experiment with the LOSH statistic as it relates to <a href="https://link.springer.com/article/10.1007/s11749-018-0599-x">Bivand and Wong&rsquo;s 2018 paper</a></h2>
-
+<h2 id="experiment-with-the-losh-statistic-as-it-relates-to-bivand-and-wongs-2018-paperhttpslinkspringercomarticle101007s11749-018-0599-x">Experiment with the LOSH statistic as it relates to <a href="https://link.springer.com/article/10.1007/s11749-018-0599-x">Bivand and Wong&rsquo;s 2018 paper</a></h2>
 <p>This is the most ambitious of the additional tasks and is still underway. Most of the work is happening behind-the-scenes at the moment, but I will post general updates as they come!</p>
 
 </main>
@@ -102,7 +75,7 @@
 <script async src="//yihui.name/js/center-img.js"></script>
   
   <hr/>
-  &copy; <a href="https://geog.umd.edu/gradprofile/sauer/jeffery-%28jeff%29">Jeff C. Sauer</a> 2017 &ndash; 2020 | <a href="https://github.com/jeffcsauer">Github</a> | <a href="https://twitter.com/jcsauer_geo">Twitter</a>
+  © <a href="https://geog.umd.edu/gradprofile/sauer/jeffery-%28jeff%29">Jeff C. Sauer</a> 2017 &ndash; 2020 | <a href="https://github.com/jeffcsauer">Github</a> | <a href="https://twitter.com/jcsauer_geo">Twitter</a>
   
   </footer>
   </body>

@@ -36,24 +36,16 @@
 
 
 <main>
-
-
 <h1 id="introduction">Introduction</h1>
-
 <p>What a whirlwind of a day to wrap up the week! This was a challenging week for GSoC. As I shared last week, I was feeling a bit down as I had encountered my first major hurdle in the project. This hurdle - inference for Case 1 of Bivariate Local Join Counts - was something that took my about a week of tinkering, reflecting, and trial-and-error to resolve. After an inspiring <code>PySAL</code> developer call I decided to spend the afternoon working on it and a solution finally emerged! The project now has completed all goals of Phase 1, namely:</p>
-
 <ul>
 <li>Reviewing literature on the spatial estimators</li>
 <li>Coding first attempts at each estimator (producing correct values, inference, and handling invalid inputs)</li>
 <li>Integrating mentor feedback</li>
 </ul>
-
 <p>I&rsquo;ll share a bit more of the updates in the remainder of the blog post.</p>
-
-<h1 id="progress-updates-a-major-push-towards-completion">Progress updates - a major push towards completion!</h1>
-
+<h1 id="progress-updates---a-major-push-towards-completion">Progress updates - a major push towards completion!</h1>
 <p>Using the table from last week I want to highlight some updates across all of the functions.</p>
-
 <table>
 <thead>
 <tr>
@@ -65,7 +57,6 @@
 <th>Tests</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td><code>LOSH</code></td>
@@ -75,7 +66,6 @@
 <td>Yes</td>
 <td>Basic tests implemented</td>
 </tr>
-
 <tr>
 <td><code>Local_Join_Count</code></td>
 <td>Yes</td>
@@ -84,7 +74,6 @@
 <td>Yes</td>
 <td>Basic tests implemented</td>
 </tr>
-
 <tr>
 <td><code>Local_Join_Count_BV</code></td>
 <td>Yes*</td>
@@ -93,7 +82,6 @@
 <td>Yes</td>
 <td>Basic tests implemented</td>
 </tr>
-
 <tr>
 <td><code>Local_Join_Count_MV</code></td>
 <td>Yes</td>
@@ -104,42 +92,33 @@
 </tr>
 </tbody>
 </table>
-
 <p>*As discussed in last week&rsquo;s post, there seems to be some interesting behavior with this function depending on input dataset.</p>
-
-<p>A summary of updates brought by this week include:
-- Working inference for Bivariate Local Join Counts (Case 1) (!)
-- PEP8 code formatting (with the exception of a few long supplementary lines)
-- Formatted and edited docstrings
-- Doctests for both a toy dataset and external reference. External reference uses the same datasets as the vignette for R <code>spdep::LOSH()</code> or the GeoDa online tutorials. The only exception is the doctest for <code>Local_Join_Count_MV()</code> as there is no multivariate example in the GeoDa tutorials, so I simply added a variable to the bivariate example.</p>
-
-<h1 id="inference-for-local-join-count-bv-function">Inference for <code>Local_Join_Count_BV</code> function</h1>
-
+<p>A summary of updates brought by this week include:</p>
+<ul>
+<li>Working inference for Bivariate Local Join Counts (Case 1) (!)</li>
+<li>PEP8 code formatting (with the exception of a few long supplementary lines)</li>
+<li>Formatted and edited docstrings</li>
+<li>Doctests for both a toy dataset and external reference. External reference uses the same datasets as the vignette for R <code>spdep::LOSH()</code> or the GeoDa online tutorials. The only exception is the doctest for <code>Local_Join_Count_MV()</code> as there is no multivariate example in the GeoDa tutorials, so I simply added a variable to the bivariate example.</li>
+</ul>
+<h1 id="inference-for-local_join_count_bv-function">Inference for <code>Local_Join_Count_BV</code> function</h1>
 <p>By a sheer stroke of luck and tinkering, we now have working inference for Bivariate Local Join Counts (Case 1). The trick was using the following operation in the _crand() function (function <a href="https://github.com/jeffcsauer/GSOC2020/blob/master/functions/local_join_count_bv.py#L188">here</a>):</p>
-
 <pre><code>...
 tmp_z = z[idsi[rids[:, 0:wc[i]]]]
 if case == &quot;BJC&quot;:
     joins[i] = x[i] * (w[i] * tmp_z).sum(1)
 ...
-</code></pre>
-
-<p>This calculates the number of joins by multiplying a given <code>x[i]</code> value by <code>(w[i] * tmp_z).sum(1)</code> (sum of weights for <code>z_i</code>). When we compare the simulated p-values to those of GeoDa, we get a strong agreement and no strange values. This is a huge relief as this was a major obstacle that - for whatever reason - I could not wrap my head around.</p>
-
+</code></pre><p>This calculates the number of joins by multiplying a given <code>x[i]</code> value by <code>(w[i] * tmp_z).sum(1)</code> (sum of weights for <code>z_i</code>). When we compare the simulated p-values to those of GeoDa, we get a strong agreement and no strange values. This is a huge relief as this was a major obstacle that - for whatever reason - I could not wrap my head around.</p>
 <h1 id="moving-forward-getting-to-know-numba">Moving forward: getting to know <code>numba</code>!</h1>
-
 <p>Now that a basic inference method is working across all of the functions we can begin to take a look at Levi and Dani&rsquo;s <code>numba</code> endeavor. The TLDR of this initiative is that they are finding huge performance increases using the <code>numba</code> compiler, specifically increasing the efficiency of the conditional randomization procedure. I will need to take a look at some of the <a href="http://numba.pydata.org/"><code>numba</code> documentation</a> and then <a href="https://github.com/ljwolf/esda/blob/moran-perf/esda/crand.py">Levi&rsquo;s <code>esda</code> fork</a> to understand how they work together.</p>
-
 <h1 id="gsoc-to-do">GSoC To Do</h1>
-
 <ul>
 <li>Finalize docstrings/doctests/functions</li>
 <li>Talk to Levi about migrating each function over to <code>numba</code></li>
 <li>Start to prepare for a PR with esda by setting up a local testing environment
-
 <ul>
 <li>Need to be able to run <code>from esda import losh</code>, <code>from esda import Local_Join_Count</code>, etc. in local testing environment to fully check tests</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
 </main>
@@ -151,7 +130,7 @@ if case == &quot;BJC&quot;:
 <script async src="//yihui.name/js/center-img.js"></script>
   
   <hr/>
-  &copy; <a href="https://geog.umd.edu/gradprofile/sauer/jeffery-%28jeff%29">Jeff C. Sauer</a> 2017 &ndash; 2020 | <a href="https://github.com/jeffcsauer">Github</a> | <a href="https://twitter.com/jcsauer_geo">Twitter</a>
+  © <a href="https://geog.umd.edu/gradprofile/sauer/jeffery-%28jeff%29">Jeff C. Sauer</a> 2017 &ndash; 2020 | <a href="https://github.com/jeffcsauer">Github</a> | <a href="https://twitter.com/jcsauer_geo">Twitter</a>
   
   </footer>
   </body>
