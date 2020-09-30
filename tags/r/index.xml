@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R on A minimal Hugo website</title>
+    <link>/tags/r/</link>
+    <description>Recent content in R on A minimal Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 30 Sep 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>arcos and arcospy now in JOSS!</title>
+      <link>/post/2020/09/30/arcos-and-arcospy-now-in-joss/</link>
+      <pubDate>Wed, 30 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/09/30/arcos-and-arcospy-now-in-joss/</guid>
+      <description>Just a short post to announce a milestone in the arcos and arcospy journey! A writeup of the software was accepted at The Journal of Open Source Software. The paper is available online here. This was quite the adventure, and I thought it would be fun to quickly lay out the major moments leading up to this point.
+ Summer 2019: I read a Washington Post story about the release of a large portion of the ARCOS database and an accompanying software package to access the data called arcos.</description>
+    </item>
+    
+  </channel>
+</rss>
