@@ -6,10 +6,28 @@
     <description>Recent content in Tags on A minimal Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 30 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 28 Dec 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>research</title>
+      <link>/tags/research/</link>
+      <pubDate>Mon, 28 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/research/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Life</title>
+      <link>/tags/life/</link>
+      <pubDate>Wed, 30 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/life/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>R</title>
@@ -17,15 +35,6 @@
       <pubDate>Wed, 30 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>/tags/r/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>life</title>
-      <link>/tags/life/</link>
-      <pubDate>Wed, 30 Sep 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/life/</guid>
       <description></description>
     </item>
     

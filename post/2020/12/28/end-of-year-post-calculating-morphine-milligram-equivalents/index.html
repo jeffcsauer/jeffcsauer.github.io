@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>End-of-year post: calculating morphine milligram equivalents | A minimal Hugo website</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/about/">About</a></li>
+      
+      <li><a href="/files/cv.pdf">CV</a></li>
+      
+      <li><a href="/post/">Blog</a></li>
+      
+      <li><a href="/tags/">Tags</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+<div class="article-meta">
+<h1><span class="title">End-of-year post: calculating morphine milligram equivalents</span></h1>
+<h2 class="author">JCS</h2>
+<h2 class="date">2020/12/28</h2>
+</div>
+
+
+
+<main>
+
+
+<p>This post is both a reminder to my future self and an explanatory note to future researchers interested in granular opioid shipment data. Many publications and government agencies (state and federal) use morphine milligram equivalents (aka MME for short) as a measure of &lsquo;opioid volume&rsquo;. This is an essential calculation as there are many types of prescription opioids that come in many shapes (tabs, patches, powders) and sizes (5mg, 10mg, 15mg, etc) and formulations (Oxycodone, Hydrocodone, Oxy+acetaminophen, etc). Researchers interested in comparing individual or area &lsquo;opioid exposure&rsquo; need to be able to compare these various prescription opioids in an apples-to-apples scenario, hence the importance of MME.</p>
+
+<p>But why is MME so important? Consider the following extreme example. Location A received 100 prescription opioid pills, whereas location B received 10 prescription opioid pills. If we only had information on the number of pills, more generically called &lsquo;dosage units&rsquo;, it would seem that Location A has a far greater &lsquo;opioid exposure&rsquo; as it has ten times the amount of pills compared to Location B. However, what if we had additional information on the strength of each pill? Each pill in location A only had 1 mg of Oxycodone, whereas each pill in Location B had 10 mg of Oxycodone. Using this information we can quickly see that Location A had 100 mg of total exposure (100 pills x 1 mg per pill), the same amount of exposure as Location B (10 pills x 10 mg per pill). Note that this is NOT the full MME equation (we will get there shortly). This is only a toy example, but it illustrates the importance of MME calculations in order to create an apples to apples comparison.</p>
+
+<p>The actual calculation of MME is, on initial searches, a bit elusive. While it appears as the de facto unit of measurement in many publications, few actually list <em>how</em> they calculated MME. I am not sure why this is. Perhaps the most banal reason is that it is considered a routine standardization step that does not need repeating in limited publication space, especially among pharmaceutical professionals. That being said, I think making the calculation widely available is important as more and more non-pharmaceutical professionals are analyzing prescription opioid records in the wake of the US Opioid Overdose Epidemic. What follows is an explanation how to calculate MME, as well as official sources to back up the equation I present. The extended discussing that motivates this blog post can be found <a href="https://github.com/wpinvestigative/arcos-api/issues/1">here</a>.</p>
+
+<h3 id="calculating-morphine-milligram-equivalents-mme">Calculating morphine milligram equivalents (MME)</h3>
+
+<p>First, let me share my primary point reference material. MME have existed for some time, and so there exist a number of official guidelines provided by the CDC. The source I am using is entitled <a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;ved=2ahUKEwjPwoGO5t_tAhUDCM0KHR9oAw8QFjABegQIARAC&amp;url=https%3A%2F%2Fwww.cdc.gov%2Fdrugoverdose%2Fdata-files%2FCDC_Oral_Morphine_Milligram_Equivalents_Sept_2018.xlsx&amp;usg=AOvVaw0Zl7Mz6AJfT13y8M3bnmvk">CDC compilation of benzodiazepines, muscle relaxants, stimulants, zolpidem, and opioid analgesics with oral morphine milligram equivalent conversion factors, 2018 version</a>. Of interest to the present post is Sheet 1 (Documentation), Lines 20 through 28. This section is aptly named, ‘CALCULATION OF MORPHINE MILLIGRAM EQUIVALENTS PER DAY’. This equation is:</p>
+
+<pre><code>Strength per Unit  X  (Number of Units/Days Supply)  X  MME conversion factor  =  MME/Day
+
+</code></pre>
+
+<p>Note the inclusion of ‘Days Supply`. This transforms our MME into a measure of MME <em>per day</em>. If we wanted raw MME, we simply remove the ‘Days Supply’ form the equation. This results in:</p>
+
+<pre><code>Strength per Unit  X  Number of Units  X  MME conversion factor  =  MME
+
+</code></pre>
+
+<p>From the examples in cells 24 and 25 we can see that MME is calculated as the strength of the tablet, the number of tablets, and the MME conversion factor. While these variables are clearly labeled in the Opioids Sheet of the CDC table, <strong>we do not yet know which variables in the Drug Enforcement Administration&rsquo;s Automated Reports and Consolidated Ordering System (ARCOS) data correspond to each of these variables.</strong> We need to identify which columns of the ARCOS data correspond to:</p>
+
+<ul>
+<li>Strength Per Unit</li>
+<li>Number of Units</li>
+<li>MME conversion factor</li>
+</ul>
+
+<p>It is self-evident from the column names that the ARCOS <code>MME_Conversion_Factor</code> column corresponds to the MME conversion factor. However, we still need to identify ‘Strength Per Unit’ and ‘Number of Units’.</p>
+
+<p>To determine <code>Strength Per Unit</code>, let’s grab a single ARCOS data record and cross-reference the NDC number to the previously linked CDC file.</p>
+
+<pre><code class="language-r">library(arcos)
+
+AnokaData &lt;- county_raw(state=&quot;MN&quot;, county=&quot;Anoka&quot;, key=&quot;WaPo&quot;)
+
+print(AnokaData$NDC_NO[1])
+
+[1] &quot;00406035762&quot;
+
+</code></pre>
+
+<p>Cross-referencing 00406035762 on the CDC document corresponds to the column <code>Strength_Per_Unit</code> results in a value of 5. This is the same value found in the ARCOS <code>dos_str</code> column. This is shown by:</p>
+
+<pre><code class="language-r">AnokaData$dos_str[1]
+
+[1] 5
+
+</code></pre>
+
+<p>We now need only to identify Number of Units. Based on both the CDC document and this additional external source, the <a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;ved=2ahUKEwjPwoGO5t_tAhUDCM0KHR9oAw8QFjADegQIAxAC&amp;url=https%3A%2F%2Fapps.health.ny.gov%2Fpub%2Fctrldocs%2Fbne%2Fnyosammeformulation.pdf&amp;usg=AOvVaw262PSkEdPhsqHJmKPd8g9f">New York State (NYS) - Issued Formulation Morphine Milligram Equivalent (MME) Conversion Table Guidance</a>, the Number of Units must correspond to the actual number of medicine units in the shipment. <code>QUANTITY</code> is possible, examining the <a href="https://maps.indiana.edu/metadata/Demographics/Health_Opioid_Data_ARCOS_DEA.html">ARCOS variable definitions</a> makes it clear that <code>QUANTITY</code> is NOT the total number of medicine units. The only remaining candidate column in the ARCOS data for this value is <code>DOSAGE_UNIT</code>.</p>
+
+<p>Thus, we have now identified the variables in both the official CDC MME equation as well as in the ARCOS R data, and they are as follows:
+-   CDC equation name: Strength Per Unit; ARCOS R column: <code>dos_str</code>
+-   CDC equation name: Number of Units;  ARCOS R column: <code>DOSAGE_UNITS</code>
+-   CDC equation name: MME conversion factor; ARCOS R column: <code>MME_Conversion_Factor</code></p>
+
+<p>To calculate MME using the ARCOS R/python data, you must multiply:</p>
+
+<pre><code class="language-r">
+MME = dos_str * DOSAGE_UNTS * MME_Conversion_Factor
+
+</code></pre>
+
+<h3 id="broader-discussion-of-morphine-milligram-equivalents-mme-compared-to-other-conceptualizations-of-opioid-volume">Broader discussion of morphine milligram equivalents (MME) compared to other conceptualizations of opioid volume</h3>
+
+<p>The <a href="https://github.com/wpinvestigative/arcos-api/issues/1">Github discussion on calculating MME from DEA ARCOS data</a> have raised some excellent points that touch on issues like data quality, clarity of documentation, and more. Most importantly, MME is but one of the many ways to conceptualize opioid volume in an area. A recent review by <a href="https://academic.oup.com/epirev/advance-article-abstract/doi/10.1093/epirev/mxaa002/5815326?redirectedFrom=fulltext">Puac-Polanco et al.&rsquo;s</a> highlights this. It is possible to implement the CDC MME calculation using the ARCOS R/python data, although it does <strong>not</strong> seem to be readily able to calculate MME per day.</p>
+
+<p>Is this generic MME equation the ‘best’ MME equation? Not necessarily, and there may not be a single ‘best’ measurement. I greatly appreciate the efforts of @m-dedeo and @unoriginaluid to dig into how this measurement might be more complicated when considering specific forms of opioids. In fact, I think there is utility in <code>CALC_BASE_CT_IN_GMS * MME_Conversion_Factor</code> as it gets at the MME of base ingredient. I believe that these are <strong>both</strong> valid measurements, although they are getting at slightly different things (raw estimated MME vs combination drug MME).</p>
+
+<h3 id="key-references">Key references</h3>
+
+<ul>
+<li><a href="https://academic.oup.com/epirev/advance-article-abstract/doi/10.1093/epirev/mxaa002/5815326?redirectedFrom=fulltext">Puac-Polanco et al. 2020. &ldquo;Prescription Drug Monitoring Programs and Prescription Opioid–Related Outcomes in the United States &ldquo;. Epidemiologic Reviews.</a></li>
+<li><a href="https://digitalcommons.coastal.edu/etd/120/">Bunker, Michael. 2020. &ldquo;Cluster Analysis of Opioid Accessibility in the Carolinas Using Data from the ARCOS Database and an Enhanced Two-Step Floating Catchment Area Method&rdquo;. Coastal Carolina University Electronic Theses and Dissertations.</a></li>
+<li><a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;ved=2ahUKEwjPwoGO5t_tAhUDCM0KHR9oAw8QFjABegQIARAC&amp;url=https%3A%2F%2Fwww.cdc.gov%2Fdrugoverdose%2Fdata-files%2FCDC_Oral_Morphine_Milligram_Equivalents_Sept_2018.xlsx&amp;usg=AOvVaw0Zl7Mz6AJfT13y8M3bnmvk">CDC compilation of benzodiazepines, muscle relaxants, stimulants, zolpidem, and opioid analgesics with oral morphine milligram equivalent conversion factors, 2018 version</a></li>
+<li><a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;ved=2ahUKEwjPwoGO5t_tAhUDCM0KHR9oAw8QFjADegQIAxAC&amp;url=https%3A%2F%2Fapps.health.ny.gov%2Fpub%2Fctrldocs%2Fbne%2Fnyosammeformulation.pdf&amp;usg=AOvVaw262PSkEdPhsqHJmKPd8g9f">New York State (NYS) - Issued Formulation Morphine Milligram Equivalent (MME) Conversion Table Guidance</a></li>
+</ul>
+
+</main>
+
+  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+  
+  <hr/>
+  &copy; <a href="https://geog.umd.edu/gradprofile/sauer/jeffery-%28jeff%29">Jeff C. Sauer</a> 2017 &ndash; 2021 | <a href="https://github.com/jeffcsauer">Github</a>
+  
+  </footer>
+  </body>
+</html>
+
+

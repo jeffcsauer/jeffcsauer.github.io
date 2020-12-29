@@ -6,10 +6,19 @@
     <description>Recent content in Posts on A minimal Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 30 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 28 Dec 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>End-of-year post: calculating morphine milligram equivalents</title>
+      <link>/post/2020/12/28/end-of-year-post-calculating-morphine-milligram-equivalents/</link>
+      <pubDate>Mon, 28 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/12/28/end-of-year-post-calculating-morphine-milligram-equivalents/</guid>
+      <description>This post is both a reminder to my future self and an explanatory note to future researchers interested in granular opioid shipment data. Many publications and government agencies (state and federal) use morphine milligram equivalents (aka MME for short) as a measure of &amp;lsquo;opioid volume&amp;rsquo;. This is an essential calculation as there are many types of prescription opioids that come in many shapes (tabs, patches, powders) and sizes (5mg, 10mg, 15mg, etc) and formulations (Oxycodone, Hydrocodone, Oxy+acetaminophen, etc).</description>
+    </item>
     
     <item>
       <title>arcos and arcospy now in JOSS!</title>
