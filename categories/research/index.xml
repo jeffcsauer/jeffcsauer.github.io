@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>research on A minimal Hugo website</title>
@@ -6,10 +6,15 @@
     <description>Recent content in research on A minimal Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 28 Dec 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/categories/research/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Thu, 14 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/research/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spatial weight matrices from R (or other programs!) into SAS</title>
+      <link>/post/2021/01/14/loading-spatial-weight-matrices-into-sas/</link>
+      <pubDate>Thu, 14 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2021/01/14/loading-spatial-weight-matrices-into-sas/</guid>
+      <description>In some recent research efforts I was attempting to deploy a specific type of spatial model in R. This spatial model has many names including a cross-regressive model, the spatially-lagged X model, or, more simply, the SLX model. You can spot this model whenever you see the inclusion of a spatial weights matrix on an X variable in the right hand side of the regression equation. For example, take a simple linear regression:</description>
+    </item>
     
     <item>
       <title>End-of-year post: calculating morphine milligram equivalents</title>

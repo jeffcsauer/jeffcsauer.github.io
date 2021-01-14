@@ -36,83 +36,44 @@
 
 
 <main>
-
-
 <h1 id="introduction">Introduction</h1>
-
-<p>The midpoint of summer is approaching. This coming week will mark a midway point in GSoC2020. As I move away from the hurdle of the last couple of weeks I am setting into a pace of fine-tuning the functions and creating robust notebooks to demonstrate their functionality. While bugs are nuanced errors are sure to arise, I am feeling good about the latter <sup>2</sup>&frasl;<sub>3</sub> of GSoC2020.</p>
-
+<p>The midpoint of summer is approaching. This coming week will mark a midway point in GSoC2020. As I move away from the hurdle of the last couple of weeks I am setting into a pace of fine-tuning the functions and creating robust notebooks to demonstrate their functionality. While bugs are nuanced errors are sure to arise, I am feeling good about the latter 2/3 of GSoC2020.</p>
 <h1 id="strategy-demonstration-notebooks">Strategy: demonstration notebooks</h1>
-
-<p>I am working on two &lsquo;final&rsquo; demonstration notebooks that showcase the LOSH and LJC functions. These two notebooks are going to focus less on the coding and more on the application of the functions. These types of notebooks are important as many users want to understand the substantive meaning of the functions (i.e. &lsquo;what does a high LOSH value mean?&rsquo;). To assuage any user concerns about deploying the functions in Python I will use the same examples that appear in <code>R</code> <code>spdep::LOSH()</code> as well as GeoDa.</p>
-
+<p>I am working on two &lsquo;final&rsquo; demonstration notebooks that showcase the LOSH and LJC functions. These two notebooks are going to focus less on the coding and more on the application of the functions. These types of notebooks are important as many users want to understand the substantive meaning of the functions (i.e. &lsquo;what does a high LOSH value mean?'). To assuage any user concerns about deploying the functions in Python I will use the same examples that appear in <code>R</code> <code>spdep::LOSH()</code> as well as GeoDa.</p>
 <h1 id="software-development-reflections">Software development reflections</h1>
-
 <h2 id="understanding-tests">Understanding tests</h2>
-
 <p>If you take a look at my <a href="https://docs.google.com/document/d/1WjHjy5Eyk4WG5QWfnsnhWg1r4-e09JXXCx0iaPphg6c/edit?usp=sharing">GSoC2020 proposal</a>, you will see that we are heading into Week 8. The docstrings and doctests are present in each function. I&rsquo;ve also written a series of straightforward tests using <code>unittest</code>, available for view <a href="https://github.com/jeffcsauer/GSOC2020/tree/master/tests">here</a>. I implemented the functions and tests in a fork of <code>esda</code>. All the tests are passing at the moment and - if the functions remain stable over the next few weeks - I will likely submit a pull request.</p>
-
-<p>On the topic of tests, I was quite concerned with what makes a &lsquo;good&rsquo; test. I read up on several sources from [here]() and [there](), but I wasn&rsquo;t really understanding the fundamental point of testing. In my mind, I understand the logic of a test. For example:</p>
-
-<pre><code class="language-python">assert np.array_equal(ljc.LJC, [0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 2, 2, 3, 3, 2])
-</code></pre>
-
-<p>The above test is checking the values of <code>ljc.LJC</code> against an array. Because the input dataset is fixed in its arrangement of 0s and 1s, we want to ensure thta that the functions returns the expected values.</p>
-
+<p>On the topic of tests, I was quite concerned with what makes a &lsquo;good&rsquo; test. I read up on several sources from <a href="">here</a> and <a href="">there</a>, but I wasn&rsquo;t really understanding the fundamental point of testing. In my mind, I understand the logic of a test. For example:</p>
+<pre><code class="language-{python}" data-lang="{python}">assert np.array_equal(ljc.LJC, [0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 2, 2, 3, 3, 2])
+</code></pre><p>The above test is checking the values of <code>ljc.LJC</code> against an array. Because the input dataset is fixed in its arrangement of 0s and 1s, we want to ensure thta that the functions returns the expected values.</p>
 <p>The question then arises: what if you have fundamentally misunderstood how to implement the function? Or perhaps you your reference values have been calculated incorrectly? If either of these were the case, your test becomes meaningless (or, even worse, permitting wrong values). When I brought up my concerns with Levi, he linked a <a href="https://www.reddit.com/r/ProgrammerHumor/comments/3bg3ro/yay_all_unit_tests_passing/">fitting picture</a> which captured my concerns. Levi explained that we want to write tests that can capture large and obvious incorrect behavior. In this approach, tests are less about making sure that the function gets the correct values. They are more about checking that the right types of data are returned, or that inappropriate inputs raise errors.</p>
-
 <h2 id="should-the-three-local-join-count-functions-be-merged-into-a-single-file">Should the three <code>Local Join Count</code> functions be merged into a single file?</h2>
-
 <p>In the <code>esda</code> implementation of Moran, the various versions of Moran are implemented in a single file. This single-file approach reduces the total number of files and centralizes the location where future edits are to be made. On the other hand, keeping the functions separate might prevent editing errors. Given the partial overlap of the code in each function, I could imagine a scenario wherein a user carries out a Control+F operation and accidentally alters all three functions.</p>
-
 <p>There is a good discussion of the advantages on keeping the functions split in this <a href="https://stackoverflow.com/questions/15580539/what-are-the-advantages-of-using-more-then-1-code-file-for-a-project-c/15580555#15580555">SO post</a>. To briefly summarize, the core advantage of keeping the files independent are:</p>
-
 <ul>
 <li>leveraging single-file compiler speed</li>
 <li>project organization and readability</li>
 <li>facilitating &lsquo;code reuse&rsquo;</li>
 </ul>
-
 <p>The above post actually links to <a href="https://www.gamedev.net/tutorials/_/technical/general-programming/organizing-code-files-in-c-and-c-r1798/">this</a> explanation posted on Gamedev.net.</p>
-
 <h1 id="challenge-migrating-to-numba">Challenge: migrating to <code>numba</code></h1>
-
 <p>As a final push to improve the functions, Levi suggested that I try migrating the inference in my functions to use the new <code>numba</code>-based conditional randomization engine (detailed here on <a href="https://github.com/ljwolf/esda/blob/moran-perf/esda/crand.py">Levi&rsquo;s <code>esda</code> fork</a>). The new engine is live on the primary PySAL <code>esda</code> submodule, so it is a worthwhile effort to migrate as many functions as possible.</p>
-
 <p>This new engine only applies to the local join count functions as of now. I spent some time on Friday migrating these functions. I encountered the most difficulty at the conceptual stage of implementation. For example, take a look at this <code>numba</code>-ized <code>_crand()</code> code for the univariate local join count:</p>
-
 <pre><code>@_njit(fastmath=True)
 def _ljc_uni(i, z, permuted_ids, weights_i, scaling):
     zi, zrand = _prepare_univariate(i, z, permuted_ids, weights_i)
     return zi * (zrand @ weights_i)
-</code></pre>
-
-<p>Although it&rsquo;s only a few lines, there is actually quite a bit going on. The first is the header:</p>
-
+</code></pre><p>Although it&rsquo;s only a few lines, there is actually quite a bit going on. The first is the header:</p>
 <pre><code>@_njit(fastmath=True)
-</code></pre>
-
-<p>This &lsquo;reduces numerical rigour with view of gaining additional performance&rsquo; (<a href="https://numba.pydata.org/numba-doc/latest/user/performance-tips.html#fastmath">source</a>). Next, we feed in a series of&hellip;</p>
-
+</code></pre><p>This &lsquo;reduces numerical rigour with view of gaining additional performance&rsquo; (<a href="https://numba.pydata.org/numba-doc/latest/user/performance-tips.html#fastmath">source</a>). Next, we feed in a series of&hellip;</p>
 <pre><code>def _ljc_uni(i, z, permuted_ids, weights_i, scaling):
-</code></pre>
-
-<p>is, zs, permuted_ids, weights_i, and scaling into a function&hellip;wait a second, what are we feeding these values into? Aha - now you see my conceptual hiccup. You see, function is actually a sub-routine of the larger <a href="https://github.com/ljwolf/esda/blob/moran-perf/esda/crand.py#L67"><code>_crand()</code> engine</a>. So these is, zs, permuted_ids, and weights are being passed to the <code>_crand()</code> function with an additional <em>statistical_function</em> (i.e. <code>stat_func</code>), which we defined above as <code>_ljc_uni</code>. I was stuck for quite some time on understanding which of these functions is actually called first. Understanding that <code>_ljc_uni</code> - or any of the other statistical functions in <code>esda</code> - are a sub-routine of <code>_crand()</code> is essential for writing your own.</p>
-
+</code></pre><p>is, zs, permuted_ids, weights_i, and scaling into a function&hellip;wait a second, what are we feeding these values into? Aha - now you see my conceptual hiccup. You see, function is actually a sub-routine of the larger <a href="https://github.com/ljwolf/esda/blob/moran-perf/esda/crand.py#L67"><code>_crand()</code> engine</a>. So these is, zs, permuted_ids, and weights are being passed to the <code>_crand()</code> function with an additional <em>statistical_function</em> (i.e. <code>stat_func</code>), which we defined above as <code>_ljc_uni</code>. I was stuck for quite some time on understanding which of these functions is actually called first. Understanding that <code>_ljc_uni</code> - or any of the other statistical functions in <code>esda</code> - are a sub-routine of <code>_crand()</code> is essential for writing your own.</p>
 <p>From there, we can generate a series of <code>zi</code> and <code>zrand</code> objects using yet another pre-written function called <code>_prepare_univariate</code>. This function handles the shuffling and creation of z-minus-i and randomly values for these i units.</p>
-
 <pre><code>zi, zrand = _prepare_univariate(i, z, permuted_ids, weights_i)
-</code></pre>
-
-<p>We can then do some quick math with these output products to get the local join counts:</p>
-
+</code></pre><p>We can then do some quick math with these output products to get the local join counts:</p>
 <pre><code>return zi * (zrand @ weights_i)
-</code></pre>
-
-<p>This operation is taking a given value, <code>zi</code>, and multiplying it by the dot product of the randomized values times the weights matrix. Note that this final operation changes depending on what local statistic you are interested in. You can see the results at the end of each new <a href="https://github.com/jeffcsauer/GSOC2020/tree/master/validation">validation notebook</a>.</p>
-
+</code></pre><p>This operation is taking a given value, <code>zi</code>, and multiplying it by the dot product of the randomized values times the weights matrix. Note that this final operation changes depending on what local statistic you are interested in. You can see the results at the end of each new <a href="https://github.com/jeffcsauer/GSOC2020/tree/master/validation">validation notebook</a>.</p>
 <h1 id="gsoc-to-do">GSoC To Do</h1>
-
 <ul>
 <li>Finalize demonstration notebooks comparing PySAL functionality to <code>R</code> <code>spdep::LOSH()</code> and GeoDa.</li>
 <li>Ask Levi/Serge about a contributing a pull request.</li>
@@ -127,7 +88,7 @@ def _ljc_uni(i, z, permuted_ids, weights_i, scaling):
 <script async src="//yihui.name/js/center-img.js"></script>
   
   <hr/>
-  &copy; <a href="https://geog.umd.edu/gradprofile/sauer/jeffery-%28jeff%29">Jeff C. Sauer</a> 2017 &ndash; 2021 | <a href="https://github.com/jeffcsauer">Github</a>
+  © <a href="https://geog.umd.edu/gradprofile/sauer/jeffery-%28jeff%29">Jeff C. Sauer</a> 2017 &ndash; 2021 | <a href="https://github.com/jeffcsauer">Github</a>
   
   </footer>
   </body>

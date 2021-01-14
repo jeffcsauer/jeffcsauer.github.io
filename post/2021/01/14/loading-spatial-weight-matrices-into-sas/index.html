@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spatial weight matrices from R (or other programs!) into SAS | A minimal Hugo website</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/about/">About</a></li>
+      
+      <li><a href="/files/cv.pdf">CV</a></li>
+      
+      <li><a href="/post/">Blog</a></li>
+      
+      <li><a href="/tags/">Tags</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+<div class="article-meta">
+<h1><span class="title">Spatial weight matrices from R (or other programs!) into SAS</span></h1>
+<h2 class="author">JCS</h2>
+<h2 class="date">2021/01/14</h2>
+</div>
+
+
+
+<main>
+<p>In some recent research efforts I was attempting to deploy a specific type
+of spatial model in R. This spatial model has many names including a
+cross-regressive model, the spatially-lagged X model, or, more simply, the
+SLX model. You can spot this model whenever you see the inclusion of a 
+spatial weights matrix on an X variable in the right hand side of the regression
+equation. For example, take a simple linear regression:</p>
+<p>$$ Y = \alpha + X_1 + \epsilon $$</p>
+<p>and compare it to its SLX counterpart:</p>
+<p>$$ Y = \alpha + X_1 + W X_1 + \epsilon $$</p>
+<p>Note the inclusion of the $$ W X_1 $$ term in the second equation. The above
+models are described using generic language to describe the SLX model, a 
+more comprehensive overview is provided in the prominent <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/jors.12188">Vega and Elhorst paper</a>.</p>
+<p>There arebnumerous ways to fit the SLX model in both R and Python, and most
+users will drift towards <code>R::spatialreg::lmSLX()</code> or <code>python.spreg.OLS()</code>. 
+In my own research I was looking to fit a specific version of the SLX model for
+count data. As of this writing, there does not seem to be such an implementation in R or Python. As I set out to implement the models in R (will post that at a later point),
+I wanted to check my work against an existing implementation. This led me to 
+discover the <a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;ved=2ahUKEwjxg-i6jZzuAhVCJ80KHft6BaYQFjAAegQIARAC&amp;url=https%3A%2F%2Fsupport.sas.com%2Fresources%2Fpapers%2Fproceedings16%2FSAS4440-2016.pdf&amp;usg=AOvVaw1OtnqaDOkb-8UtIVEy_Thq">SAS PROC COUNTREG function</a>, which explicitly mentions
+the inclusion of spatial weights for count (Poisson) models. I had never used SAS before
+so I was looking forward to understanding their ecosystem handled spatial data!</p>
+<p>The primary challenge in checking my R implementation against SAS was understanding how SAS 
+handled the spatial weights matrix. After some digging I came across an SAS guide
+entitled <a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;ved=2ahUKEwjxg-i6jZzuAhVCJ80KHft6BaYQFjACegQIBBAC&amp;url=https%3A%2F%2Fwww.sas.com%2Fcontent%2Fdam%2FSAS%2Fsupport%2Fen%2Fsas-global-forum-proceedings%2F2018%2F2481-2018.pdf&amp;usg=AOvVaw3c8bJH6zjaV9dGONT8begA">&lsquo;Creating a Spatial Weights Matrix for the SPATIALREG Procedure&rsquo;</a>.
+In this guide they explain that a user should specify a row-standardized (e.g. row sums to 1) spatial weights matrix by having an $$ N * N $$ data file with zeroes along the diagonal. Excellent! But how do we create such a file in R? The answer to this question is what I am about to share. It may be evident to experienced spatial modelers, but it took me
+a couple of hours to figure out. Below is some general pseudo-code detailing this process - the full code is available upon request and will eventually be available on Github (if all goes according to plan).</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-R" data-lang="R"><span style="color:#75715e"># Begin by loading your geographic data (.shp, .gpkg, etc...)</span>
+SpatialData <span style="color:#f92672">&lt;-</span> rgdal<span style="color:#f92672">::</span><span style="color:#a6e22e">readOGR</span>(<span style="color:#e6db74">&#39;./DATA/data.gpkg&#39;</span>, <span style="color:#e6db74">&#34;data&#34;</span>)
+          
+<span style="color:#75715e"># Create a neighbor list (W = Queen by default)</span>
+SpatialData_nb <span style="color:#f92672">&lt;-</span> spdep<span style="color:#f92672">::</span><span style="color:#a6e22e">poly2nb</span>(SpatialData)
+
+<span style="color:#75715e"># Convert list weights into a N*N matrix.</span>
+SpatialData_nb_mat <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">nb2mat</span>(SpatialData_nb, zero.policy <span style="color:#f92672">=</span> T, style <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;W&#34;</span>)
+
+<span style="color:#75715e"># Can now save the matrix and use in SAS</span>
+MASS<span style="color:#f92672">::</span><span style="color:#a6e22e">write.matrix</span>(SpatialData_nb_mat, file <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;./DATA/data_nb_mat.txt&#34;</span>)
+</code></pre></div><p><code>data_nb_mat.txt</code> can then be loaded into SAS using the following lines:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sas" data-lang="sas"><span style="color:#66d9ef">proc import </span><span style="color:#66d9ef">file</span> = <span style="color:#e6db74">&#39;./DATA/data_nb_mat.txt&#39;</span>
+	<span style="color:#66d9ef">out</span> = dataW
+	dbms = dlm
+	<span style="color:#66d9ef">replace</span>; * replaces already loaded dataset;
+	getnames = NO
+<span style="color:#66d9ef">;
+</span><span style="color:#66d9ef">run;</span>
+</code></pre></div><p>And there you have it! You can now use a spatial weights matrix that was generated in R in a specialty SAS model. I realize this may not be relevant to everyone, but it is a neat trick that allowed me to check my results. More on these efforts later!</p>
+
+</main>
+
+  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+  
+  <hr/>
+  © <a href="https://geog.umd.edu/gradprofile/sauer/jeffery-%28jeff%29">Jeff C. Sauer</a> 2017 &ndash; 2021 | <a href="https://github.com/jeffcsauer">Github</a>
+  
+  </footer>
+  </body>
+</html>
+
+

@@ -36,63 +36,39 @@
 
 
 <main>
-
-
 <h1 id="a-conclusion-to-google-summer-of-code-2020">A conclusion to Google Summer of Code 2020</h1>
-
 <p><em>A huge thank you to to @sjsrey, @ljwolf, @darribas, @slumnitz, @TaylorOshan, and the larger <a href="https://github.com/orgs/pysal/people">PySAL group</a> for acting as mentors throughout the summer and welcoming me to the PySAL community. This was a wonderful exercise in developing open-source software and I would highly recommend future students consider contributing to PySAL!</em></p>
-
 <p>After a summer condensed into ten blog posts we arrive at the finale - one final blog post to mark the end of the program. If you are here for the first time, a short re-introduction of the project is worthwhile. The Google Summer of Code (GSOC) program connects students with open-source software development groups. Before making a formal application to the program, applications seek out a development group relevant to their interests - in my case, quantitative geography - and start to contribute in small ways to the existing software. Some students make sizable contributions before the program even begins! Once the student feels that the software development group is a good fit, the student prepares a proposal. The proposal includes a week-by-week breakdown of their expected contributions to the software, split into Phases I, II, and III. As you might imagine, we are now at the end of Phase III.</p>
-
 <p>My <a href="https://docs.google.com/document/d/1WjHjy5Eyk4WG5QWfnsnhWg1r4-e09JXXCx0iaPphg6c/edit?usp=sharing">proposal</a> sought to add several newly(ish) identified spatial statistics to the Exploratory Spatial Data Analysis (ESDA) submodule of PySAL. These spatial statistics include Local Join Counts (univariate, bivariate, and multivariate) proposed by <a href="https://link.springer.com/article/10.1007/s10109-019-00299-x">Anselin and Li (2019)</a>, as well as Local Spatial Heteroskedasticity (LOSH) proposed by <a href="https://link.springer.com/article/10.1007/s00168-011-0492-y">Ord and Getis (2012)</a>. This brought the total number of functions to be implemented to four. As with the other functions available in ESDA and throughout PySAL, each of these functions would include docstrings, doctests, and documentation so that future users would have ample help files should they encounter any issues.</p>
-
 <p>My general strategy towards implementation was as follows</p>
-
 <ol>
 <li>Read the original papers and work through a manual calculation of the spatial statistic.</li>
 <li>Transition the knowledge gained in Step 1 to a Jupyter Notebook. These notebooks are available <a href="https://github.com/jeffcsauer/GSOC2020/tree/master/validation">here</a> and include detailed step-by-step calculations of the statistics on a &lsquo;toy&rsquo; dataset.</li>
 <li>Translate the step-by-step calculations into a draft function. The initial drafts of each function were written as standard Python functions. When available, results of the function were compared to existing implementations in R (for LOSH) or C++ (for Local Join Counts).</li>
 </ol>
-
 <p><em>Get feedback from mentors&hellip;</em></p>
-
-<ol>
+<ol start="4">
 <li>Transform the standard form Python functions into Scikit-learn style functions.</li>
 <li>Validate the results of the function across several variables and datasets using existing implementations available in R or C++.</li>
 </ol>
-
 <p><em>Get more feedback from mentors!</em></p>
-
-<ol>
+<ol start="6">
 <li>Let the functions &lsquo;settle&rsquo; for a bit so any bugs can arise naturally. This was an important step as some issues would not make themselves known until some time had past after the initial implementation.</li>
 <li>Fill out docstrings, doctests, and documentation notebooks, and write continuous integration tests.</li>
 <li>Open a pull request on <code>pysal/esda</code>!</li>
 </ol>
-
 <p>Although I would often be able to get quick versions of the functions up and running, it was often the fine-tuning of the functions that took the most time. One clear example is the implementation of statistical inference across several of the functions. The Local Join Count functions depend on conditional randomization to determine significance of a given area unit. Initially, I implemented inference following a version of the conditional randomization engine in PySAL called <code>_crand()</code>. As timing would have it, PySAL contributors Levi and Dani were working on a new version of this engine that utilized <code>numba</code>, which would allow for much faster conditional randomization. Although inference is only one part of the Local Join Count statistics, a bulk of the time was spent coding inference for both versions of the engine. The real heroes of this side story are Levi and Dani, whose <a href="https://github.com/pysal/esda/blob/master/esda/crand.py"><code>numba</code>-ized conditional randomization engine</a> offers the same inference in a fraction of the previous time.</p>
-
-<h1 id="stretch-goals-even-more-functions">Stretch goals - even more functions!</h1>
-
+<h1 id="stretch-goals---even-more-functions">Stretch goals - even more functions!</h1>
 <p>Towards the mid-to-end of July (and Phase II), significant progress had been made on the original goals of the project. All of the four initial functions had been written, and so I worked with the project mentors to outline additional goals to be completed by the end of GSOC. These so-called &lsquo;stretch goals&rsquo; focused on implementing another set of spatial estimators called local Geary statistics. Unlike the LOSH and Local Join Count estimators, the local Geary statistics have existed for quite some time in the spatial analysis literature. The univariate version of the local Geary statistic was outlined by <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1538-4632.1995.tb00338.x">Anselin in 1995</a>, and expanded upon more than 20 years later by <a href="https://geodacenter.github.io/docs/LA_multivariateGeary1.pdf#10">Anselin in 2017</a>.</p>
-
 <p>It was with the multivariate local Geary statistic where I encountered the most issue. The existing conditional randomization engines in PySAL focus on univariate and bivariate inputs (ex. <code>Local_Moran</code> versus <code>Local_Moran_BV</code>). However, none of the statistics handle multivariate inputs. While I could use the existing setup of the <a href="https://github.com/jeffcsauer/GSOC2020/blob/master/functions/local_geary_mv.py#L131-L142"><code>_crand()</code> engine</a>, the actual subsetting of multivariate inputs and calculation had to be modified quite a bit to handle inputs of 2 or more variables. Luckily, after a couple days of tinkering around I figured out a relatively straightforward subsetting solution that should have occurred to me much sooner! It was a great moment of <em>think smarter, not harder</em>. In short, the new solution first holds area <em>i</em> in place, randomizes the rest of the areas, subsets the random neighbors of area <em>i</em>, and carries out the local Geary calculation. All in all, I was able to add six functions to the ESDA submodule!</p>
-
 <h1 id="concluding-thoughts">Concluding thoughts</h1>
-
 <p>This summer has proven immensely rewarding. There are a few key reflections I would like to share as takeaway points:</p>
-
 <p><strong>Reading a paper is different from understanding a paper, and implementing a paper is different from understanding a paper.</strong></p>
-
 <p>As explained above in my implementation strategy, my first step in implementation was always to read the original paper. After a few reads, I would come away from the paper thinking that I had a good understanding of what was being proposed. Yet when I would begin to work through a manual calculation of the statistic I often revealed to myself something I had missed in the paper. Returning to the paper, that previously overlooked detail was resting their plainly among the other sentences and words! This process repeated itself when transitioning from the manual calculations to the implementation in code, as more and more details revealed themselves on the original paper. Sentences I glossed over on the first read are now emphasized by my eyes, as they hold the secret to a tricky addition, for loop, or row sum. I look back at the original papers with an entirely new atmosphere of appreciation and reverence.</p>
-
 <p><strong>Software development can advance science, even if the software development itself may not always be science.</strong></p>
-
 <p>In my opinion, there is a difference between the idea of a statistic, how it is brought to life through code, and the scientific problem it might ultimately address. When I was piecing together how to make a function like <code>losh</code> producing the right numbers, I did not feel as if I was &lsquo;doing science&rsquo; in that moment (e.g. figuring out a for loop or the exact behavior of indexing on weights). Yet when the function began producing the right numbers, and when I started preparing documentation to be shared with future users, I did feel that I was &lsquo;doing science&rsquo;.</p>
-
 <p><strong>Reading code is a lot like reading a book. With every additional file opened, you realize there is so much more you have to learn.</strong></p>
-
 <p>While I read a book, I often have the thought that the page-turning motion is an endless one. With each page completed, you turn over to the next page. One could steadily repeat this process their entire life and never turn all the pages in the world. They would likely not get even close. Indeed, with every turn of the page we move further away from where we started. I have started to have this feeling with code. As my skills progress (albeit meagerly), I find myself curiouser and curiouser about the coding of others. I open up files, peek into repositories, and try to read languages that I haven&rsquo;t yet even installed on my computer. I don&rsquo;t understand most of it, but does anyone understand each page of a book? Every sentence and phrase the author put into place?</p>
-
 <p>All in all, I am so very thankful for the opportunity to work with PySAL, NumFOCUS, and Google during the summer of 2020. This will certainly be a summer to remember.</p>
 
 </main>
@@ -104,7 +80,7 @@
 <script async src="//yihui.name/js/center-img.js"></script>
   
   <hr/>
-  &copy; <a href="https://geog.umd.edu/gradprofile/sauer/jeffery-%28jeff%29">Jeff C. Sauer</a> 2017 &ndash; 2021 | <a href="https://github.com/jeffcsauer">Github</a>
+  © <a href="https://geog.umd.edu/gradprofile/sauer/jeffery-%28jeff%29">Jeff C. Sauer</a> 2017 &ndash; 2021 | <a href="https://github.com/jeffcsauer">Github</a>
   
   </footer>
   </body>
